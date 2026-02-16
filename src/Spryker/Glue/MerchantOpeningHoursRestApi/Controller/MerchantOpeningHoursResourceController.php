@@ -19,9 +19,7 @@ class MerchantOpeningHoursResourceController extends AbstractController
     /**
      * @Glue({
      *     "getCollection": {
-     *          "summary": [
-     *              "Retrieves merchant opening hours."
-     *          ],
+     *          "summary": "Retrieves merchant opening hours.",
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],

@@ -1,2 +1,6 @@
 parameters:
     level: 7
+    ignoreErrors:
+        -
+            identifier: phpDoc.parseError
+            message: '#PHPDoc tag @Glue has invalid value#'

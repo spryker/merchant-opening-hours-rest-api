@@ -154,7 +154,7 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
         $merchantOpeningHoursStorageTransfers = $this->merchantOpeningHoursStorageClient
             ->getMerchantOpeningHoursByMerchantIds($merchantIdsIndexedByReference);
 
-        if (!array_filter($merchantOpeningHoursStorageTransfers)) {
+        if ($merchantOpeningHoursStorageTransfers === []) {
             return [];
         }
 
