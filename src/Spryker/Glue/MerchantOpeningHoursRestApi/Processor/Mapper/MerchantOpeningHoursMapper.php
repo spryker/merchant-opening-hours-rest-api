@@ -14,12 +14,6 @@ use Generated\Shared\Transfer\RestWeekdayScheduleTransfer;
 
 class MerchantOpeningHoursMapper implements MerchantOpeningHoursMapperInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer
-     * @param \Generated\Shared\Transfer\RestMerchantOpeningHoursAttributesTransfer $restMerchantOpeningHoursAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestMerchantOpeningHoursAttributesTransfer
-     */
     public function mapMerchantOpeningHoursStorageTransferToRestMerchantOpeningHoursAttributesTransfer(
         MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer,
         RestMerchantOpeningHoursAttributesTransfer $restMerchantOpeningHoursAttributesTransfer

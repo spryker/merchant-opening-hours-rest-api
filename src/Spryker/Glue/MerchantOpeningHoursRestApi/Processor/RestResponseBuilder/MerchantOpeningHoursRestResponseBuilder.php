@@ -30,10 +30,6 @@ class MerchantOpeningHoursRestResponseBuilder implements MerchantOpeningHoursRes
      */
     protected $merchantOpeningHoursMapper;
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Mapper\MerchantOpeningHoursMapperInterface $merchantOpeningHoursMapper
-     */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         MerchantOpeningHoursMapperInterface $merchantOpeningHoursMapper
@@ -60,12 +56,6 @@ class MerchantOpeningHoursRestResponseBuilder implements MerchantOpeningHoursRes
         return $merchantOpeningHoursRestResources;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer
-     * @param string $merchantReference
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createMerchantOpeningHoursRestResponse(
         MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer,
         string $merchantReference
@@ -77,17 +67,11 @@ class MerchantOpeningHoursRestResponseBuilder implements MerchantOpeningHoursRes
             ->addResource($merchantsRestResource);
     }
 
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createEmptyMerchantOpeningHoursRestResponse(): RestResponseInterface
     {
         return $this->restResourceBuilder->createRestResponse();
     }
 
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createMerchantNotFoundErrorResponse(): RestResponseInterface
     {
         return $this->restResourceBuilder
@@ -100,9 +84,6 @@ class MerchantOpeningHoursRestResponseBuilder implements MerchantOpeningHoursRes
             );
     }
 
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createMerchantIdentifierMissingErrorResponse(): RestResponseInterface
     {
         return $this->restResourceBuilder->createRestResponse()
@@ -114,12 +95,6 @@ class MerchantOpeningHoursRestResponseBuilder implements MerchantOpeningHoursRes
             );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer
-     * @param string $merchantReference
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
     protected function createMerchantOpeningHoursRestResource(
         MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer,
         string $merchantReference
@@ -141,11 +116,6 @@ class MerchantOpeningHoursRestResponseBuilder implements MerchantOpeningHoursRes
         return $restResource;
     }
 
-    /**
-     * @param string $merchantReference
-     *
-     * @return string
-     */
     protected function getMerchantsOpeningHoursResourceSelfLink(string $merchantReference): string
     {
         return sprintf(

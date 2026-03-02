@@ -17,9 +17,6 @@ class MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander implem
      */
     protected $merchantOpeningHoursReader;
 
-    /**
-     * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Reader\MerchantOpeningHoursReaderInterface $merchantOpeningHoursReader
-     */
     public function __construct(MerchantOpeningHoursReaderInterface $merchantOpeningHoursReader)
     {
         $this->merchantOpeningHoursReader = $merchantOpeningHoursReader;

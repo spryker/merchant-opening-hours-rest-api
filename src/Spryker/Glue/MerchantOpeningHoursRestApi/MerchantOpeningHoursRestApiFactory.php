@@ -27,9 +27,6 @@ use Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Translator\MerchantOpenin
  */
 class MerchantOpeningHoursRestApiFactory extends AbstractFactory
 {
-    /**
-     * @return \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Reader\MerchantOpeningHoursReaderInterface
-     */
     public function createMerchantOpeningHoursReader(): MerchantOpeningHoursReaderInterface
     {
         return new MerchantOpeningHoursReader(
@@ -40,9 +37,6 @@ class MerchantOpeningHoursRestApiFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHoursRestResponseBuilderInterface
-     */
     public function createMerchantOpeningHoursRestResponseBuilder(): MerchantOpeningHoursRestResponseBuilderInterface
     {
         return new MerchantOpeningHoursRestResponseBuilder(
@@ -51,49 +45,31 @@ class MerchantOpeningHoursRestApiFactory extends AbstractFactory
         );
     }
 
-    /**
-     * @return \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Translator\MerchantOpeningHoursTranslatorInterface
-     */
     public function createMerchantOpeningHoursTranslator(): MerchantOpeningHoursTranslatorInterface
     {
         return new MerchantOpeningHoursTranslator($this->getGlossaryStorageClient());
     }
 
-    /**
-     * @return \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Expander\MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpanderInterface
-     */
     public function createMerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander(): MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpanderInterface
     {
         return new MerchantOpeningHoursByMerchantReferenceResourceRelationshipExpander($this->createMerchantOpeningHoursReader());
     }
 
-    /**
-     * @return \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Mapper\MerchantOpeningHoursMapperInterface
-     */
     public function createMerchantOpeningHoursMapper(): MerchantOpeningHoursMapperInterface
     {
         return new MerchantOpeningHoursMapper();
     }
 
-    /**
-     * @return \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface
-     */
     public function getMerchantOpeningHoursStorageClient(): MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface
     {
         return $this->getProvidedDependency(MerchantOpeningHoursRestApiDependencyProvider::CLIENT_MERCHANT_OPENING_HOURS_STORAGE);
     }
 
-    /**
-     * @return \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantStorageClientInterface
-     */
     public function getMerchantStorageClient(): MerchantOpeningHoursRestApiToMerchantStorageClientInterface
     {
         return $this->getProvidedDependency(MerchantOpeningHoursRestApiDependencyProvider::CLIENT_MERCHANT_STORAGE);
     }
 
-    /**
-     * @return \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToGlossaryStorageClientInterface
-     */
     public function getGlossaryStorageClient(): MerchantOpeningHoursRestApiToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(MerchantOpeningHoursRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);

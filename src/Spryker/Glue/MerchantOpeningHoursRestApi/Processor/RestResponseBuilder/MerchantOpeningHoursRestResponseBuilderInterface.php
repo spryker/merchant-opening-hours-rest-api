@@ -19,29 +19,14 @@ interface MerchantOpeningHoursRestResponseBuilderInterface
      */
     public function createMerchantOpeningHoursRestResources(array $merchantOpeningHoursStorageTransfers): array;
 
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer
-     * @param string $merchantReference
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createMerchantOpeningHoursRestResponse(
         MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer,
         string $merchantReference
     ): RestResponseInterface;
 
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createEmptyMerchantOpeningHoursRestResponse(): RestResponseInterface;
 
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createMerchantNotFoundErrorResponse(): RestResponseInterface;
 
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createMerchantIdentifierMissingErrorResponse(): RestResponseInterface;
 }

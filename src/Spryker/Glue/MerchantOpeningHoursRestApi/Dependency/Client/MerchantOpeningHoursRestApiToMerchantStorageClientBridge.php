@@ -25,11 +25,6 @@ class MerchantOpeningHoursRestApiToMerchantStorageClientBridge implements Mercha
         $this->merchantStorageClient = $merchantStorageClient;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
-     */
     public function findOne(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): ?MerchantStorageTransfer
     {
         return $this->merchantStorageClient->findOne($merchantStorageCriteriaTransfer);

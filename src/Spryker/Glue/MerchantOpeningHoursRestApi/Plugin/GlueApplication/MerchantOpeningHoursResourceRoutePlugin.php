@@ -69,9 +69,6 @@ class MerchantOpeningHoursResourceRoutePlugin extends AbstractPlugin implements 
         return RestMerchantOpeningHoursAttributesTransfer::class;
     }
 
-    /**
-     * @return string
-     */
     public function getParentResourceType(): string
     {
         return MerchantOpeningHoursRestApiConfig::RESOURCE_MERCHANTS;

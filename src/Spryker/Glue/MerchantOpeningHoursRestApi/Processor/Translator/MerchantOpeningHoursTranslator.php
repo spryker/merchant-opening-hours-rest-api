@@ -16,9 +16,6 @@ class MerchantOpeningHoursTranslator implements MerchantOpeningHoursTranslatorIn
      */
     protected $glossaryStorageClient;
 
-    /**
-     * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToGlossaryStorageClientInterface $glossaryStorageClient
-     */
     public function __construct(MerchantOpeningHoursRestApiToGlossaryStorageClientInterface $glossaryStorageClient)
     {
         $this->glossaryStorageClient = $glossaryStorageClient;

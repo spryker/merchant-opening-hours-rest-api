@@ -38,12 +38,6 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
      */
     protected $merchantOpeningHoursTranslator;
 
-    /**
-     * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface $merchantOpeningHoursStorageClient
-     * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantStorageClientInterface $merchantStorageClient
-     * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\RestResponseBuilder\MerchantOpeningHoursRestResponseBuilderInterface $merchantOpeningHoursRestResponseBuilder
-     * @param \Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Translator\MerchantOpeningHoursTranslatorInterface $merchantOpeningHoursTranslator
-     */
     public function __construct(
         MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface $merchantOpeningHoursStorageClient,
         MerchantOpeningHoursRestApiToMerchantStorageClientInterface $merchantStorageClient,
@@ -56,11 +50,6 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
         $this->merchantOpeningHoursTranslator = $merchantOpeningHoursTranslator;
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function getMerchantOpeningHours(RestRequestInterface $restRequest): RestResponseInterface
     {
         $merchantResource = $restRequest->findParentResourceByType(MerchantOpeningHoursRestApiConfig::RESOURCE_MERCHANTS);
