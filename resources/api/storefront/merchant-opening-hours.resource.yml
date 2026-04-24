@@ -1,0 +1,65 @@
+resource:
+    name: MerchantOpeningHours
+    shortName: merchant-opening-hours
+    description: 'Opening hours schedule for a merchant'
+
+    provider: Spryker\Glue\MerchantOpeningHoursRestApi\Api\Storefront\Provider\MerchantOpeningHoursStorefrontProvider
+
+    paginationEnabled: false
+
+    operations:
+        - type: GetCollection
+          uriTemplate: /merchants/{merchantReference}/merchant-opening-hours
+          description: 'Retrieve opening hours for a merchant'
+          uriVariables:
+              merchantReference:
+                  fromClass: MerchantsStorefrontResource
+
+    includableIn:
+        - resource: Merchants
+          relationshipName: merchant-opening-hours
+          uriVariableMappings:
+              merchantReference: merchantReference
+
+    properties:
+        merchantReference:
+            type: string
+            identifier: true
+            writable: false
+            readable: true
+            required: false
+            description: 'Merchant reference identifier'
+            openapiContext:
+                example: 'MER000001'
+
+        weekdaySchedule:
+            type: array
+            writable: false
+            readable: true
+            required: false
+            description: 'Weekday schedule'
+            openapiContext:
+                example:
+                    - day: 'monday'
+                      timeFrom: '08:00:00'
+                      timeTo: '18:00:00'
+                    - day: 'tuesday'
+                      timeFrom: '08:00:00'
+                      timeTo: '18:00:00'
+
+        dateSchedule:
+            type: array
+            writable: false
+            readable: true
+            required: false
+            description: 'Specific-date schedule'
+            openapiContext:
+                example:
+                    - date: '2046-12-25'
+                      timeFrom: null
+                      timeTo: null
+                      isClosed: true
+                    - date: '2046-12-31'
+                      timeFrom: '08:00:00'
+                      timeTo: '14:00:00'
+                      isClosed: false
