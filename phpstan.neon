@@ -1,6 +1,13 @@
 parameters:
     level: 7
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         -
             identifier: phpDoc.parseError
             message: '#PHPDoc tag @Glue has invalid value#'
+#        API Platform Generated resource classes are intentionally excluded from generation
+#        (see config/GlueStorefront/packages/spryker_api_platform.php).
+        - '#invalid type Generated\\Api\\Storefront\\MerchantOpeningHoursStorefrontResource\.#'
+        - '#invalid return type Generated\\Api\\Storefront\\MerchantOpeningHoursStorefrontResource\.#'
+        - '#unknown class Generated\\Api\\Storefront\\MerchantOpeningHoursStorefrontResource\.#'
+        - '#Instantiated class Generated\\Api\\Storefront\\MerchantOpeningHoursStorefrontResource not found\.#'
