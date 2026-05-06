@@ -52,4 +52,8 @@
         <property name="merchantReferences" type="string[]" singular="merchantReference" description="A collection of merchant references."/>
     </transfer>
 
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
 </transfers>

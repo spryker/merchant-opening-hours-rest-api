@@ -15,6 +15,19 @@ resource:
               merchantReference:
                   fromClass: MerchantsStorefrontResource
 
+        # IRI-only operation. Shares the URI template with GetCollection above
+        # so API Platform's IriConverter generates per-item self links of
+        # /merchants/{merchantReference}/merchant-opening-hours instead of the
+        # synthetic /merchant-opening-hours/{id} default. GetCollection is
+        # registered first and serves all incoming requests; this Get route is
+        # shadowed by the matcher and never invokes provideItem().
+        - type: Get
+          uriTemplate: /merchants/{merchantReference}/merchant-opening-hours
+          description: 'Canonical IRI for merchant opening hours (resolved from the merchantReference identifier on the resource itself)'
+          uriVariables:
+              merchantReference:
+                  identifiers: [merchantReference]
+
     includableIn:
         - resource: Merchants
           relationshipName: merchant-opening-hours
@@ -52,14 +65,14 @@ resource:
             writable: false
             readable: true
             required: false
-            description: 'Specific-date schedule'
+            description: 'Specific-date schedule. Each item carries a date and optional time window. The noteGlossaryKey field, when present, is returned localized for the request locale.'
             openapiContext:
                 example:
                     - date: '2046-12-25'
                       timeFrom: null
                       timeTo: null
-                      isClosed: true
+                      noteGlossaryKey: 'Public holiday'
                     - date: '2046-12-31'
                       timeFrom: '08:00:00'
                       timeTo: '14:00:00'
-                      isClosed: false
+                      noteGlossaryKey: null

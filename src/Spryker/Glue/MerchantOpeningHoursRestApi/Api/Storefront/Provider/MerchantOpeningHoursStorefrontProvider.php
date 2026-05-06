@@ -14,25 +14,20 @@ use Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer;
 use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Spryker\ApiPlatform\Exception\GlueApiException;
 use Spryker\ApiPlatform\State\Provider\AbstractStorefrontProvider;
+use Spryker\Client\GlossaryStorage\GlossaryStorageClientInterface;
 use Spryker\Client\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageClientInterface;
 use Spryker\Client\MerchantStorage\MerchantStorageClientInterface;
+use Spryker\Glue\MerchantOpeningHoursRestApi\MerchantOpeningHoursRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class MerchantOpeningHoursStorefrontProvider extends AbstractStorefrontProvider
 {
     protected const string URI_VAR_MERCHANT_REFERENCE = 'merchantReference';
 
-    protected const string ERROR_CODE_MERCHANT_NOT_FOUND = '3501';
-
-    protected const string ERROR_MESSAGE_MERCHANT_NOT_FOUND = 'Merchant not found.';
-
-    protected const string ERROR_CODE_MERCHANT_REFERENCE_NOT_SPECIFIED = '3502';
-
-    protected const string ERROR_MESSAGE_MERCHANT_REFERENCE_NOT_SPECIFIED = 'Merchant identifier is not specified.';
-
     public function __construct(
         protected MerchantOpeningHoursStorageClientInterface $merchantOpeningHoursStorageClient,
         protected MerchantStorageClientInterface $merchantStorageClient,
+        protected GlossaryStorageClientInterface $glossaryStorageClient,
     ) {
     }
 
@@ -52,8 +47,8 @@ class MerchantOpeningHoursStorefrontProvider extends AbstractStorefrontProvider
         if ($merchantStorageTransfer === null) {
             throw new GlueApiException(
                 Response::HTTP_NOT_FOUND,
-                static::ERROR_CODE_MERCHANT_NOT_FOUND,
-                static::ERROR_MESSAGE_MERCHANT_NOT_FOUND,
+                MerchantOpeningHoursRestApiConfig::RESPONSE_CODE_MERCHANT_NOT_FOUND,
+                MerchantOpeningHoursRestApiConfig::RESPONSE_DETAIL_MERCHANT_NOT_FOUND,
             );
         }
 
@@ -71,6 +66,7 @@ class MerchantOpeningHoursStorefrontProvider extends AbstractStorefrontProvider
         }
 
         $merchantOpeningHoursStorageTransfer = reset($merchantOpeningHoursStorageTransfers);
+        $this->translateDateScheduleNotes($merchantOpeningHoursStorageTransfer);
 
         return [$this->mapToResource($merchantOpeningHoursStorageTransfer, $merchantReference)];
     }
@@ -94,9 +90,37 @@ class MerchantOpeningHoursStorefrontProvider extends AbstractStorefrontProvider
     {
         throw new GlueApiException(
             Response::HTTP_BAD_REQUEST,
-            static::ERROR_CODE_MERCHANT_REFERENCE_NOT_SPECIFIED,
-            static::ERROR_MESSAGE_MERCHANT_REFERENCE_NOT_SPECIFIED,
+            MerchantOpeningHoursRestApiConfig::RESPONSE_CODE_MERCHANT_IDENTIFIER_MISSING,
+            MerchantOpeningHoursRestApiConfig::RESPONSE_DETAIL_MERCHANT_IDENTIFIER_MISSING,
         );
+    }
+
+    protected function translateDateScheduleNotes(MerchantOpeningHoursStorageTransfer $transfer): void
+    {
+        $glossaryKeys = [];
+
+        foreach ($transfer->getDateSchedule() as $dateScheduleTransfer) {
+            $key = $dateScheduleTransfer->getNoteGlossaryKey();
+            if ($key !== null && $key !== '') {
+                $glossaryKeys[] = $key;
+            }
+        }
+
+        if ($glossaryKeys === []) {
+            return;
+        }
+
+        $translations = $this->glossaryStorageClient->translateBulk(
+            array_values(array_unique($glossaryKeys)),
+            $this->getLocale()->getLocaleNameOrFail(),
+        );
+
+        foreach ($transfer->getDateSchedule() as $dateScheduleTransfer) {
+            $key = $dateScheduleTransfer->getNoteGlossaryKey();
+            if ($key !== null && isset($translations[$key])) {
+                $dateScheduleTransfer->setNoteGlossaryKey($translations[$key]);
+            }
+        }
     }
 
     protected function mapToResource(
@@ -119,7 +143,11 @@ class MerchantOpeningHoursStorefrontProvider extends AbstractStorefrontProvider
         $schedule = [];
 
         foreach ($transfer->getWeekdaySchedule() as $weekdayScheduleTransfer) {
-            $schedule[] = $weekdayScheduleTransfer->toArray();
+            $schedule[] = [
+                'day' => $weekdayScheduleTransfer->getDay(),
+                'timeFrom' => $weekdayScheduleTransfer->getTimeFrom(),
+                'timeTo' => $weekdayScheduleTransfer->getTimeTo(),
+            ];
         }
 
         return $schedule;
@@ -133,7 +161,12 @@ class MerchantOpeningHoursStorefrontProvider extends AbstractStorefrontProvider
         $schedule = [];
 
         foreach ($transfer->getDateSchedule() as $dateScheduleTransfer) {
-            $schedule[] = $dateScheduleTransfer->toArray();
+            $schedule[] = [
+                'date' => $dateScheduleTransfer->getDate(),
+                'timeFrom' => $dateScheduleTransfer->getTimeFrom(),
+                'timeTo' => $dateScheduleTransfer->getTimeTo(),
+                'noteGlossaryKey' => $dateScheduleTransfer->getNoteGlossaryKey(),
+            ];
         }
 
         return $schedule;
